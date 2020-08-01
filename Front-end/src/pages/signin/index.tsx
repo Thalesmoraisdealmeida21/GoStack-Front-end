@@ -4,7 +4,8 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { useToast } from '../../hooks/Toast';
-import { Container, Background, Content } from './style';
+import { Container, Background, Content, AnimationContainer } from './style';
+import {useHistory, Link} from 'react-router-dom'
 
 import logo from '../../assets/logo.svg';
 
@@ -23,6 +24,9 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
   const { addToast } = useToast();
+
+  const history = useHistory();
+
 
   const handleSubmit = useCallback(
     async (data: DataUser) => {
@@ -60,26 +64,29 @@ const SignIn: React.FC = () => {
   return (
     <Container>
       <Content>
+        <AnimationContainer>
         <img src={logo} alt="GO Barber" />
 
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu logon</h1>
-          <Input icon={FiMail} name="email" type="text" placeholder="E-mail" />
-          <Input
-            icon={FiLock}
-            type="password"
-            name="password"
-            placeholder="Senha"
-          />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Faça seu logon</h1>
+            <Input icon={FiMail} name="email" type="text" placeholder="E-mail" />
+            <Input
+              icon={FiLock}
+              type="password"
+              name="password"
+              placeholder="Senha"
+            />
 
-          <Button type="submit"> Entrar</Button>
-          <a href="/forgot">Esqueci minha senha</a>
-        </Form>
+            <Button type="submit"> Entrar</Button>
+            <a href="#">Esqueci Minha Senha</a>
+          </Form>
 
-        <a href="/create">
-          <FiLogIn />
-          Esqueci minha senha
-        </a>
+          <Link to="/signup">
+            <FiLogIn />
+            Criar Conta
+          </Link>
+        </AnimationContainer>
+
       </Content>
       <Background />
     </Container>

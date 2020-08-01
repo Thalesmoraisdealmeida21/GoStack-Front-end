@@ -10,18 +10,34 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { Container, Background, Content } from './style';
+import api from '../../services/api';
+
+
+import {useToast} from './../../hooks/Toast'
 
 import getValidationErrors from '../../utils/getValidationErrors';
+import {Link, useHistory} from 'react-router-dom'
 
 import logo from '../../assets/logo.svg';
 
 import Input from '../../components/input';
 import Button from '../../components/button';
+import { title } from 'process';
+import { type } from 'os';
 
+
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+
+}
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const { addToast } = useToast();
+  const history = useHistory();
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async (data: SignUpFormData) => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
@@ -37,12 +53,34 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-    } catch (err) {
-      const errors = getValidationErrors(err);
 
-      formRef.current?.setErrors(errors);
+      await api.post('/users', data)
+
+      addToast({
+          title: 'Sistema',
+          type: "success",
+          description: 'Cadastro Realizado com sucesso'
+       })
+
+       history.push('/');
+
+    } catch (err) {
+
+      if(err instanceof Yup.ValidationError){
+        const errors = getValidationErrors(err);
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+
+      addToast({
+        type: 'error',
+        title: 'Erro no cadastro do usuário',
+        description: 'Ocorreu um erro ao cadastrar o usuário'
+      })
+
     }
-  }, []);
+  }, [addToast]);
 
   return (
     <Container>
@@ -64,10 +102,10 @@ const SignUp: React.FC = () => {
           <Button type="submit">Cadastrar</Button>
         </Form>
 
-        <a href="/create">
+        <Link to="/">
           <FiArrowLeft />
           Voltar para o logon
-        </a>
+        </Link>
       </Content>
     </Container>
   );
