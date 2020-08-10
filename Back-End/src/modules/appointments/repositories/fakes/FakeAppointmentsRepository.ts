@@ -1,7 +1,7 @@
 
 
 
-import Appointment from "./../../infra/typeorm/entites/Appointment"
+import Appointment from "./../../infra/typeorm/entities/Appointment"
 import { uuid } from 'uuidv4'
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository'

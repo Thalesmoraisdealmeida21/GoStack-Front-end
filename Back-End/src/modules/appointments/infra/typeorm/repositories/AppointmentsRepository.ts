@@ -1,7 +1,7 @@
 
 import {getRepository, Repository} from 'typeorm'
 
-import Appointment from "./../entites/Appointment"
+import Appointment from "../entities/Appointment"
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository'
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
@@ -30,9 +30,7 @@ class AppointmentsRepository implements IAppointmentsRepository{
 
    public async create({provider_id, date }: ICreateAppointmentDTO): Promise<Appointment>{
       const appointment =  this.ormRepository.create({provider_id, date})
-
       this.ormRepository.save(appointment);
-
       return appointment;
    }
 

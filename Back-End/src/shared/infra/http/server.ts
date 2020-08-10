@@ -12,13 +12,18 @@ import '@shared/infra/typeorm';
 import routes from './routes'
 
 
+import '@shared/container/index';
+
+
 const app = express()
 
-import '@shared/container/index';
+import '@shared/container';
+
 app.use(cors())
 app.use(express.json())
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadFolder));
 app.use(routes)
+
 
 app.use((err: Error, request: Request, response: Response, next: NextFunction)=>{
     if (err instanceof AppError){
@@ -28,7 +33,7 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction)=>
         })
     }
 
-    console.error(err)
+    console.error("Erro" + err)
 
     return response.status(500).json({
         status: 'error',

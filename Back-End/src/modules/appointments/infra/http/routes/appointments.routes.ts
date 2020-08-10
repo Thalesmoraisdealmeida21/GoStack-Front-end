@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router, response } from 'express'
 
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated'
@@ -9,8 +9,10 @@ const appointmentsRouter = Router();
 
 
 
-appointmentsRouter.use(ensureAuthenticated);
-appointmentsRouter.post('/', appointmentsController.create);
+
+  appointmentsRouter.use(ensureAuthenticated);
+  appointmentsRouter.post('/', appointmentsController.create);
+
 
 
 export default appointmentsRouter;

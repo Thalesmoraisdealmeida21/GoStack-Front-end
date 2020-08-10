@@ -1,16 +1,17 @@
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
-import CreateUserService from './CreateUserService';
+import AuthenticateUserService from './AuthenticateUserService';
 import FakeHashProvider from './../providers/HashProvider/fakes/FakeHashProvider';
+import CreateUserService from './CreateUserService';
 import AppError from '@shared/errors/AppError'
 
 
-describe('CreateUser', () => {
-  it('should bbe able to create a new appointment', async  () => {
+describe('AuthenticateUser', () => {
+  it('should be able to authenticate', async  () => {
         const fakeUsersRepository = new FakeUsersRepository();
         const fakeHashProvider = new FakeHashProvider();
+        const authenticateUser = new AuthenticateUserService(fakeUsersRepository, fakeHashProvider);
         const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
-
 
         const user = await createUser.execute({
           name: "Jhon Doe",
@@ -18,6 +19,14 @@ describe('CreateUser', () => {
           password: '123456'
         })
 
-        expect(user).toHaveProperty('id');
+        const response = await authenticateUser.execute({
+          email: "jhon@jhon.com",
+          password: '123456'
+        })
+
+
+
+        expect(response).toHaveProperty('token');
+
   })
 });

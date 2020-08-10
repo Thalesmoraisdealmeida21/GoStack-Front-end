@@ -3,12 +3,6 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
-/**
- * one-to-one
- * one to many
- * manytomany
- *
- */
 
 @Entity('appointments')
 class Appointment{
@@ -30,8 +24,6 @@ class Appointment{
 
     @UpdateDateColumn()
     updated_at: Date
-
-
 
 }
 

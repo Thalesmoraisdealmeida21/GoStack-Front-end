@@ -32,12 +32,12 @@ class UsersRepository implements IUsersRepository{
 
 
    public async create(UserData: ICreateUserDTO): Promise<User>{
-    const user = new User();
+      const user = new User();
 
-    Object.assign(user, {id: uuid(), UserData});
+      Object.assign(user, {id: uuid() }, UserData);
 
-    this.users.push(user);
-    return user;
+      this.users.push(user);
+      return user;
    }
 
 
@@ -45,7 +45,6 @@ class UsersRepository implements IUsersRepository{
       const findIndex = this.users.findIndex(user => user.id === UserData.id);
 
       this.users[findIndex] = UserData;
-
 
       return UserData;
 
