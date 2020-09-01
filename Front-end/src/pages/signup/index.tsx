@@ -4,7 +4,6 @@ import {
   FiLock,
   FiUser,
   FiMail,
-  FiAlertCircle,
 } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -22,8 +21,7 @@ import logo from '../../assets/logo.svg';
 
 import Input from '../../components/input';
 import Button from '../../components/button';
-import { title } from 'process';
-import { type } from 'os';
+
 
 
 interface SignUpFormData {
